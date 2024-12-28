@@ -13,7 +13,7 @@
                     <a class="nav-link" href="#">Manage Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Manage Courses</a>
+                    <a class="nav-link" href="<?= base_url('admin/managecourses'); ?>">Manage Courses</a>
                 </li>
             </ul>
         </div>
