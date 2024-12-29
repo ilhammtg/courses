@@ -47,7 +47,7 @@ class Home extends CI_Controller
                 'status' => $this->input->post('status')
             ];
 
-            $this->db->insert('student', $data);
+            $this->db->insert('student_pending', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Register Successful!</div>');
             redirect('home/courses');
         }

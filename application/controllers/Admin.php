@@ -9,6 +9,7 @@ class Admin extends CI_Controller
         $this->load->library('session');
         $this->load->helper('url');
         $this->load->model('Courses_model');
+        $this->load->model('datastudent_model');
         $this->isAuthorized();
     }
 
@@ -96,5 +97,74 @@ class Admin extends CI_Controller
         $id = $this->uri->segment(3);
         $this->Courses_model->deletecourses($id);
         redirect('admin/managecourses');
+    }
+
+    public function studentManagement()
+    {
+        $data['title'] = 'Student Management';
+        $data['studentManage'] = $this->datastudent_model->getAllStudents();
+
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/managestudent', $data);
+        $this->load->view('templates/admin_footer');
+    }
+
+    // Method untuk menambahkan mahasiswa baru
+    public function addStudent()
+    {
+        $this->form_validation->set_rules('nama', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('no_hp', 'Phone', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Failed to add student. Please check your input.</div>');
+            redirect('admin/studentManagement');
+        } else {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'email' => $this->input->post('email'),
+                'no_hp' => $this->input->post('no_hp'),
+                'action' => $this->input->post('action'),
+            ];
+            $this->datastudent_model->addStudent($data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">New student added successfully!</div>');
+            redirect('admin/studentManagement');
+        }
+    }
+
+    // Method untuk mengedit mahasiswa
+    public function editStudent($id)
+    {
+        $data['title'] = 'Edit Student';
+        $data['student'] = $this->datastudent_model->getStudentById($id);
+
+        $this->form_validation->set_rules('nama', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('no_hp', 'Phone', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('admin/editStudent', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                'nama' => $this->input->post('nama'),
+                'email' => $this->input->post('email'),
+                'no_hp' => $this->input->post('no_hp'),
+                'action' => $this->input->post('action'),
+            ];
+            $this->datastudent_model->updateStudent($id, $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Student data updated successfully!</div>');
+            redirect('admin/studentManagement');
+        }
+    }
+
+    // Method untuk menghapus mahasiswa
+    public function deleteStudent($id)
+    {
+        $this->datastudent_model->deleteStudent($id);
+        $this->session->set_flashdata('message', '<div class="alert alert-success">Student deleted successfully!</div>');
+        redirect('admin/studentManagement');
     }
 }

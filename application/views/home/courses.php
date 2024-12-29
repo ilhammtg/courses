@@ -35,7 +35,7 @@
                 <h1 class="modal-title fs-5" id="RegisModalLabel">Input Data Anda</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('home/register'); ?>" method="post">
+            <form action="<?= base_url('home/courses'); ?>" method="post">
                 <div class="modal-body">
                     <div class="mb-3">
                         <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required>

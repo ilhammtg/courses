@@ -12,13 +12,13 @@ class Home_model extends CI_Model
             'resi_pembayaran' => $this->input->post('resi_pembayaran'),
             'status' => $this->input->post('status')
         );
-        $this->db->insert('student', $data);
+        $this->db->insert('student_pending', $data);
     }
 
     // Function to fetch data of a specific student
     function get_one($id)
     {
         $indeks = array('id_student' => $id);
-        return $this->db->get_where('student', $indeks);
+        return $this->db->get_where('student_pending', $indeks);
     }
 }
