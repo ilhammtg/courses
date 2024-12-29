@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <?php foreach ($courses as $index => $course) : ?>
-            <div class="col-md-3 mb-4">
+            <div class="col-md-3 mb-1 p-0 ">
                 <div class="card-container">
                     <div class="card">
                         <img src="<?= base_url($course['image']); ?>" class="card-img-top" alt="<?= $course['title']; ?>">

@@ -70,7 +70,7 @@ class Courses_model extends CI_Model
     }
 
     // Fungsi untuk menghapus data kursus
-    public function deleteCourse($id)
+    public function deletecourses($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('courses');
