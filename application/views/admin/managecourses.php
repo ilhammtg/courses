@@ -27,22 +27,22 @@
                             <th scope="col">Title</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Image</th>
+                            <th scope="col">Image Path</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1; ?>
-                        <?php foreach ($subMenu as $sm): ?>
+                        <?php foreach ($coursesManage as $cm): ?>
                             <tr>
                                 <th scope="row"><?= $i; ?></th>
-                                <td><?= $sm['title']; ?></td>
-                                <td><?= $sm['price']; ?></td>
-                                <td><?= $sm['description']; ?></td>
-                                <td><?= $sm['image']; ?></td>
+                                <td><?= $cm['title']; ?></td>
+                                <td><?= $cm['price']; ?></td>
+                                <td><?= $cm['description']; ?></td>
+                                <td><?= $cm['image']; ?></td>
                                 <td>
-                                    <a href="#" class="badge bg-success text-decoration-none">edit</a>
-                                    <a href="#" class="badge bg-danger text-decoration-none">delete</a>
+                                    <a type="link" href="<?= base_url('admin/editcourses/' . $cm['id']); ?>" class="badge bg-success text-decoration-none">Edit</a>
+                                    <a type="link" href="<?= base_url('admin/deletecourses/' . $cm['id']); ?>" class="badge bg-danger text-decoration-none">Delete</a>
                                 </td>
                             </tr>
                             <?php $i++; ?>
@@ -57,7 +57,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Modal -->
+<!--Input Modal -->
 <div class="modal fade" id="newCourses" tabindex="-1" aria-labelledby="newCoursesLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

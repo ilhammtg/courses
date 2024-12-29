@@ -8,6 +8,7 @@ class Admin extends CI_Controller
         is_logged_in();
         $this->load->library('session');
         $this->load->helper('url');
+        $this->load->model('Courses_model');
         $this->isAuthorized();
     }
 
@@ -30,7 +31,7 @@ class Admin extends CI_Controller
         $data['title'] = 'Manage Courses';
 
         // Ambil data dari database untuk ditampilkan di view
-        $data['subMenu'] = $this->db->get('courses')->result_array();
+        $data['coursesManage'] = $this->db->get('courses')->result_array();
 
         // Cek jika ada request POST untuk tambah data
         if ($this->input->post()) {
@@ -65,5 +66,35 @@ class Admin extends CI_Controller
         $this->load->view('templates/admin_nav', $data);
         $this->load->view('admin/managecourses', $data);
         $this->load->view('templates/admin_footer');
+    }
+
+    public function editcourses($id)
+    {
+        $data['title'] = 'Edit Course';
+        $data['course'] = $this->Courses_model->getCourseById($id);
+
+        $this->form_validation->set_rules('courses', 'Course Title', 'required');
+        $this->form_validation->set_rules('price', 'Course Price', 'required');
+        $this->form_validation->set_rules('description', 'Course Description', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/admin_header', $data);
+            $this->load->view('templates/admin_nav', $data);
+            $this->load->view('admin/editcourses', $data);
+            $this->load->view('templates/admin_footer');
+        } else {
+            $this->Courses_model->updateCourse($id);
+            $this->session->set_flashdata('message', '<div class="alert alert-success">Course updated!</div>');
+            redirect('admin/managecourses');
+        }
+    }
+
+
+
+    function deletecourses()
+    {
+        $id = $this->uri->segment(3);
+        $this->Courses_model->deletecourses($id);
+        redirect('admin/managecourses');
     }
 }
