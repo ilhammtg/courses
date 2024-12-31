@@ -9,10 +9,18 @@
                             <h5 class="card-title"><?= $course['title']; ?></h5><br>
                             <h5 class="card-title">Rp. <?= number_format($course['price'], 0, ',', '.'); ?></h5>
                             <p class="card-text"><?= $course['description']; ?></p>
+<<<<<<< HEAD
                             <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#RegisModal"
                             data-course="<?= $course['title']; ?>"
                             data-price="<?= $course['price']; ?>">Learn Now</a>
+=======
+                            <!-- Tombol Redirect ke Halaman Register -->
+                            <a href="<?= base_url('authuser/register?course=' . urlencode($course['title'])); ?>"
+                                class="btn btn-primary">
+                                Learn Now
+                            </a>
+>>>>>>> edb51df161b0226810e9473ef1cd3d7c9f89d4c9
                         </div>
                     </div>
                 </div>
@@ -25,6 +33,7 @@
     <?php endif; ?>
 <?php endforeach; ?>
     </div>
+<<<<<<< HEAD
 </div>
 
 Modal 
@@ -90,3 +99,6 @@ console.log(token);
       });
 </script>
 
+=======
+</div>
+>>>>>>> edb51df161b0226810e9473ef1cd3d7c9f89d4c9

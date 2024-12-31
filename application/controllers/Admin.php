@@ -10,7 +10,11 @@ class Admin extends CI_Controller
         $this->load->helper('url');
         $this->load->model('Courses_model');
         $this->load->model('datastudent_model');
+<<<<<<< HEAD
         $this->load->model('Materialcourses_model');
+=======
+        $this->load->model('Payment_model');
+>>>>>>> edb51df161b0226810e9473ef1cd3d7c9f89d4c9
         $this->isAuthorized();
     }
 
@@ -170,6 +174,7 @@ class Admin extends CI_Controller
         redirect('admin/studentManagement');
     }
 
+<<<<<<< HEAD
 
     public function materialcourses()
     {
@@ -219,6 +224,31 @@ class Admin extends CI_Controller
     $this->load->view('templates/admin-header');
     $this->load->view('admin/editcourses', $data);
     $this->load->view('templates/admin-footer');
+=======
+    public function payments()
+    {
+        $this->load->model('Payment_model');
+        $data['title'] = 'List Payments';
+        $data['payments'] = $this->Payment_model->getAllPayments(); // Ambil semua data pembayaran
+
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/payment', $data); // Halaman list payments
+        $this->load->view('templates/admin_footer', $data);
+    }
+
+
+    public function verify_payment($payment_id, $status)
+    {
+        if ($this->Payment_model->updateStatus($payment_id, $status)) {
+            $this->session->set_flashdata('success', 'Payment status updated successfully.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update payment status.');
+        }
+
+        redirect('admin/payments'); // Pastikan URL ini memuat ulang tabel pembayaran
+    }
+>>>>>>> edb51df161b0226810e9473ef1cd3d7c9f89d4c9
 }
 
 

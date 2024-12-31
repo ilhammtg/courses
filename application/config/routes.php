@@ -50,5 +50,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'home';
+$route['payment/form/(:num)'] = 'payment/form/$1';  // Menangani parameter course_id
+$route['admin/verify_payment/(:num)/(:any)'] = 'admin/verify_payment/$1/$2';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

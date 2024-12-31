@@ -49,14 +49,14 @@
                         <a class="nav-link" href="<?= base_url('user/user'); ?>">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('user/transaction'); ?>">Transactions</a>
+                        <a class="nav-link" href="<?= base_url('payment/form'); ?>">Payment</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('user/report'); ?>">Reports</a>
                     </li>
                 </ul>
                 <li class="nav-item">
-                    <a class="btn btn-danger" href="<?= base_url('auth/logout'); ?>">Logout</a>
+                    <a class="btn btn-danger" href="<?= base_url('authuser/logout'); ?>">Logout</a>
                 </li>
                 </ul>
             </div>

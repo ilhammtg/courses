@@ -6,8 +6,15 @@ class User extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+<<<<<<< HEAD
         is_logged_in(); // Pastikan fungsi ini sudah terdefinisi di helper atau di tempat lain
         $this->load->model('Courses_model'); // Pastikan model ini tersedia
+=======
+        // Memastikan pengguna sudah login
+        if (!$this->session->userdata('user_id')) {
+            redirect('authuser/login'); // Redirect ke halaman login jika tidak terautentikasi
+        }
+>>>>>>> edb51df161b0226810e9473ef1cd3d7c9f89d4c9
     }
 
     // Fungsi mendapatkan semua data materi
