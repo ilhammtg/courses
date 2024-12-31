@@ -3,16 +3,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Courses_model extends CI_Model
 {
-    // Fungsi untuk mendapatkan semua data kursus
-    public function getAllCourses()
+    public function __construct()
     {
-        return $this->db->get('courses')->result_array();
+        parent::__construct();
     }
+
+    // Fungsi untuk mendapatkan semua data kursus
+    public function get_all_courses()
+{
+    $this->db->select('courses.title, course_materials.file_path'); // Pastikan kolom benar
+    $this->db->from('courses, course_materials'); // Sesuaikan nama tabel
+    return $this->db->get()->result_array();
+}
 
     // Fungsi untuk mendapatkan data kursus berdasarkan ID
     public function getCourseById($id)
     {
-        return $this->db->get_where('courses', ['id' => $id])->row_array();
+        return $this->db->get_where('course_materials', ['id' => $id])->row_array();
     }
 
     // Fungsi untuk menambah data kursus baru
@@ -36,7 +43,7 @@ class Courses_model extends CI_Model
                     'image' => $image_path,
                 ];
 
-                $this->db->insert('courses', $data_insert);
+                $this->db->insert('course_materials', $data_insert);
             } else {
                 return 'default.jpg';
             }
@@ -66,13 +73,13 @@ class Courses_model extends CI_Model
         }
 
         $this->db->where('id', $id);
-        $this->db->update('courses', $data);
+        $this->db->update('course_materials', $data);
     }
 
     // Fungsi untuk menghapus data kursus
     public function deletecourses($id)
     {
         $this->db->where('id', $id);
-        $this->db->delete('courses');
+        $this->db->delete('course_materials');
     }
 }

@@ -10,6 +10,7 @@ class Admin extends CI_Controller
         $this->load->helper('url');
         $this->load->model('Courses_model');
         $this->load->model('datastudent_model');
+        $this->load->model('Materialcourses_model');
         $this->isAuthorized();
     }
 
@@ -144,9 +145,10 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('no_hp', 'Phone', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('templates/header', $data);
+            $this->load->view('templates/admin_header', $data);
+            $this->load->view('templates/admin_nav', $data);
             $this->load->view('admin/editStudent', $data);
-            $this->load->view('templates/footer');
+            $this->load->view('templates/admin_footer');
         } else {
             $data = [
                 'nama' => $this->input->post('nama'),
@@ -166,5 +168,66 @@ class Admin extends CI_Controller
         $this->datastudent_model->deleteStudent($id);
         $this->session->set_flashdata('message', '<div class="alert alert-success">Student deleted successfully!</div>');
         redirect('admin/studentManagement');
+    }
+
+
+    public function materialcourses()
+    {
+        $data['title'] = 'Material Courses';
+
+        // Ambil data dari database untuk ditampilkan di view
+        $data['coursesManage'] = $this->Materialcourses_model->getAllMaterials(); // Fungsi getAllMaterials() dibuat di model
+        // Cek jika ada request POST untuk tambah data
+        if ($this->input->post()) {
+            $config['upload_path'] = './assets/materi/';
+            $config['allowed_types'] = 'pdf';
+            $config['max_size'] = 102400; // Maksimum 100MB
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('materi')) {
+                $upload_data = $this->upload->data();
+                $image_path = 'assets/materi/' . $upload_data['file_name'];
+
+                $data_insert = [
+                    'title' => $this->input->post('courses'),
+                    'pdf_file' => $file_path, // Simpan path atau nama file PDF
+                ];
+
+                $this->db->insert('course_materials', $data_insert);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New  material course added!</div>');
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+            }
+
+            redirect('admin/materialcourses');
+        }
+
+        // Load tampilan
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/materialcourses', $data);
+        $this->load->view('templates/admin_footer');
+    }
+
+    public function editcourse($id)
+{
+    // Ambil data kursus berdasarkan ID
+    $data['course'] = $this->db->get_where('courses', ['id' => $id])->row_array();
+
+    // Tampilkan view editcourses dengan data
+    $this->load->view('templates/admin-header');
+    $this->load->view('admin/editcourses', $data);
+    $this->load->view('templates/admin-footer');
+}
+
+
+
+
+    function deletecourse_materials()
+    {
+        $id = $this->uri->segment(3);
+        $this->Courses_model->deletecourses($id);
+        redirect('admin/managecourses');
     }
 }

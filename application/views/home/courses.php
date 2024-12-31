@@ -10,9 +10,9 @@
                             <h5 class="card-title">Rp. <?= number_format($course['price'], 0, ',', '.'); ?></h5>
                             <p class="card-text"><?= $course['description']; ?></p>
                             <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#RegisModal"
-                                data-course="<?= $course['title']; ?>"
-                                data-price="<?= $course['price']; ?>">Learn Now</a>
+                            data-bs-target="#RegisModal"
+                            data-course="<?= $course['title']; ?>"
+                            data-price="<?= $course['price']; ?>">Learn Now</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+Modal 
 <div class="modal fade" id="RegisModal" tabindex="-1" aria-labelledby="RegisModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,20 +67,26 @@
             </form>
         </div>
     </div>
-</div>
+</div> 
 
-<script>
-    // Saat tombol Learn Now diklik
-    document.addEventListener('DOMContentLoaded', () => {
-        const RegisModal = document.getElementById('RegisModal');
-        RegisModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget; // Tombol yang memicu modal
-            const course = button.getAttribute('data-course');
-            const price = button.getAttribute('data-price');
 
-            // Isi input hidden di modal
-            this.querySelector('#course').value = course;
-            this.querySelector('#price').value = price;
-        });
-    });
+<script type="text/javascript">
+      // For example trigger on button clicked, or any time you need
+      var btn btn-primary = document.getElementById('btn btn-primary');
+      btn btn-primary.addEventListener('click', async function () {
+try {
+    const response = await fetch('C:\laragon\www\courses\application\views\home\peyment.php',{
+        method: 'POST',
+        body: data,
+    })
+    const token = await response.text();
+} catch (error) {
+    console.log(err.message);
+}
+console.log(token);
+        // Trigger snap popup. @TODO: Replace TRANSACTION_TOKEN_HERE with your transaction token
+        window.snap.pay('TRANSACTION_TOKEN_HERE');
+        // customer will be redirected after completing payment pop-up
+      });
 </script>
+
