@@ -14,8 +14,7 @@
             <li><a href="<?= base_url(''); ?>#contact">Contact</a></li>
 
             <div class="auth-buttons">
-                <a href="<?= base_url('auth'); ?>" class="btn-login">Login</a>
-                <a href="<?= base_url('auth/registration'); ?>" class="btn-register">Register</a>
+                <a href="<?= base_url('home/optionlogin'); ?>" class="btn-login">Login</a>
             </div>
         </ul>
 

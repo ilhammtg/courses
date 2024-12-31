@@ -11,6 +11,7 @@ class Admin extends CI_Controller
         $this->load->model('Courses_model');
         $this->load->model('datastudent_model');
         $this->load->model('Payment_model');
+        $this->load->model('Materialcourses_model');
         $this->isAuthorized();
     }
 
@@ -191,5 +192,109 @@ class Admin extends CI_Controller
         }
 
         redirect('admin/payments'); // Pastikan URL ini memuat ulang tabel pembayaran
+    }
+
+    public function materialcourses()
+    {
+        $data['title'] = 'Material Courses';
+
+        // Ambil data dari database untuk ditampilkan di view
+        $data['coursesManage'] = $this->Materialcourses_model->getAllMaterials(); // Pastikan model ini sudah dibuat dan berfungsi
+
+        // Cek jika ada request POST untuk menambah data
+        if ($this->input->post()) {
+            $config['upload_path'] = './assets/materi/';
+            $config['allowed_types'] = 'pdf|docx|doc|mp4|mkv';
+            $config['max_size'] = 204800; // Maksimum 200MB
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('materi')) {
+                $upload_data = $this->upload->data();
+                $file_path = 'assets/materi/' . $upload_data['file_name'];
+
+                $data_insert = [
+                    'title' => $this->input->post('courses'),
+                    'file_path' => $file_path, // Simpan path atau nama file
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
+
+                // Masukkan data ke tabel 'course_materials'
+                $this->db->insert('course_materials', $data_insert);
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New material course added!</div>');
+            } else {
+                // Tampilkan pesan error
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+            }
+
+            redirect('admin/materialcourses');
+        }
+
+        // Load tampilan
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/materialcourses', $data);
+        $this->load->view('templates/admin_footer');
+    }
+
+
+    public function editcourse($id)
+    {
+        // Ambil data kursus berdasarkan ID
+        $data['course'] = $this->db->get_where('courses', ['id' => $id])->row_array();
+
+        // Cek jika ada request POST untuk update data
+        if ($this->input->post()) {
+            $data_update = [
+                'title' => $this->input->post('title'),
+                'price' => $this->input->post('price'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ];
+
+            // Jika ada file yang diunggah
+            if (!empty($_FILES['materi']['name'])) {
+                $config['upload_path'] = './assets/materi/';
+                $config['allowed_types'] = 'pdf|docx|doc|mp4|mkv';
+                $config['max_size'] = 204800; // Maksimum 200MB
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('materi')) {
+                    $upload_data = $this->upload->data();
+                    $file_path = 'assets/materi/' . $upload_data['file_name'];
+                    $data_update['file_path'] = $file_path; // Tambahkan path file baru
+                } else {
+                    // Tampilkan pesan error
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+                    redirect('admin/editcourse/' . $id);
+                    return;
+                }
+            }
+
+            // Update data di tabel 'courses'
+            $this->db->where('id', $id);
+            $this->db->update('courses', $data_update);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Course updated successfully!</div>');
+            redirect('admin/courses');
+        }
+
+        // Load tampilan untuk edit kursus
+        $data['title'] = 'Edit Course';
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/editcourses', $data);
+        $this->load->view('templates/admin_footer');
+    }
+
+
+
+
+    function deletecourse_materials()
+    {
+        $id = $this->uri->segment(3);
+        $this->Courses_model->deletecourses($id);
+        redirect('admin/managecourses');
     }
 }

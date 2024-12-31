@@ -24,9 +24,16 @@
         </div>
         <div class="mb-3">
             <div class="col-sm-5">
-                <label for="image" class="form-label">Upload Image</label>
-                <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                <small>Current Image: <?= $course['image']; ?></small>
+                <label for="materi" class="form-label">Upload Materi</label>
+                <input type="file" class="form-control" id="materi" name="materi" accept=".pdf,.doc,.docx,.mp4,.mkv">
+                <small class="text-muted">Tipe file yang didukung: PDF, DOC, DOCX, MP4, MKV</small>
+                <?php if (!empty($course['file_path'])): ?>
+                    <small class="d-block mt-2">Current File:
+                        <a href="<?= base_url($course['file_path']); ?>" target="_blank">
+                            <?= basename($course['file_path']); ?>
+                        </a>
+                    </small>
+                <?php endif; ?>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Save Changes</button>

@@ -17,6 +17,15 @@ class Home extends CI_Controller
         $this->load->view('home/index', $data);
         $this->load->view('templates/home_footer.php', $data);
     }
+
+    public function optionlogin()
+    {
+        $data['title'] = 'Login Option';
+        $this->load->view('templates/home_header.php', $data);
+        $this->load->view('templates/home_navbar.php', $data);
+        $this->load->view('home/optionlogin', $data);
+        $this->load->view('templates/home_footer.php', $data);
+    }
     public function courses()
     {
         $this->form_validation->set_rules('nama', 'Nama', 'required');
