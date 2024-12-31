@@ -21,12 +21,15 @@
                     <?php if ($payment['status'] === 'Pending'): ?>
                         <a href="<?= site_url('admin/verify_payment/' . $payment['id'] . '/Verified') ?>" class="btn btn-success">Approve</a>
                         <a href="<?= site_url('admin/verify_payment/' . $payment['id'] . '/Rejected') ?>" class="btn btn-danger">Reject</a>
-                    <?php else: ?>
-                        <span class="badge badge-info"><?= ucfirst($payment['status']); ?></span>
+                    <?php elseif ($payment['status'] === 'Verified'): ?>
+                        <span class="badge text-bg-success"><?= ucfirst($payment['status']); ?></span>
+                    <?php elseif ($payment['status'] === 'Rejected'): ?>
+                        <span class="badge text-bg-danger"><?= ucfirst($payment['status']); ?></span>
                     <?php endif; ?>
                 </td>
             </tr>
         <?php endforeach; ?>
+
     </tbody>
 
 </table>
