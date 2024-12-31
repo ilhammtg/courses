@@ -20,4 +20,32 @@ class User_model extends CI_Model
     {
         return $this->db->get_where('users', ['email' => $email])->row_array();
     }
+
+    public function getAllUsers()
+    {
+        $this->db->select('users.*, courses.title as course_title');
+        $this->db->from('users');
+        $this->db->join('courses', 'users.selected_course = courses.id', 'left');
+        return $this->db->get()->result_array();
+    }
+
+    // Get user by ID
+    public function getUserById($id)
+    {
+        return $this->db->get_where('users', ['id' => $id])->row_array();
+    }
+
+    // Update user
+    public function updateUser($id, $data)
+    {
+        $this->db->where('id', $id);
+        return $this->db->update('users', $data);
+    }
+
+    // Delete user
+    public function deleteUser($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete('users');
+    }
 }

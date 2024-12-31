@@ -20,6 +20,7 @@
 
                 <a href="#" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#newCourses">Add New Menu</a>
 
+
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -31,7 +32,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-group-divider">
                         <?php $i = 1; ?>
                         <?php foreach ($coursesManage as $cm): ?>
                             <tr>
