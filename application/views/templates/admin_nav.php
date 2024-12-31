@@ -10,6 +10,9 @@
                     <a class="nav-link active" aria-current="page" href="<?= site_url('admin') ?>">Dashboard</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="<?= site_url('admin/payments') ?>">Payment</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('admin/studentManagement'); ?>">Manage Student</a>
                 </li>
                 <li class="nav-item">

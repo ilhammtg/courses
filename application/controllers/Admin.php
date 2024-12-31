@@ -10,6 +10,7 @@ class Admin extends CI_Controller
         $this->load->helper('url');
         $this->load->model('Courses_model');
         $this->load->model('datastudent_model');
+        $this->load->model('Payment_model');
         $this->isAuthorized();
     }
 
@@ -166,5 +167,29 @@ class Admin extends CI_Controller
         $this->datastudent_model->deleteStudent($id);
         $this->session->set_flashdata('message', '<div class="alert alert-success">Student deleted successfully!</div>');
         redirect('admin/studentManagement');
+    }
+
+    public function payments()
+    {
+        $this->load->model('Payment_model');
+        $data['title'] = 'List Payments';
+        $data['payments'] = $this->Payment_model->getAllPayments(); // Ambil semua data pembayaran
+
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_nav', $data);
+        $this->load->view('admin/payment', $data); // Halaman list payments
+        $this->load->view('templates/admin_footer', $data);
+    }
+
+
+    public function verify_payment($payment_id, $status)
+    {
+        if ($this->Payment_model->updateStatus($payment_id, $status)) {
+            $this->session->set_flashdata('success', 'Payment status updated successfully.');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update payment status.');
+        }
+
+        redirect('admin/payments'); // Pastikan URL ini memuat ulang tabel pembayaran
     }
 }
