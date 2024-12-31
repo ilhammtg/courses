@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 29, 2024 at 03:28 PM
+-- Generation Time: Dec 31, 2024 at 08:19 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -62,11 +62,11 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `title`, `description`, `price`, `created_by`, `image`) VALUES
-(1, 'HTML Basic', 'Pelajari dasar-dasar HTML untuk membangun struktur halaman web. Mulai dari memahami elemen HTML, atribut, hingga membuat halaman yang terstruktur dan menarik.', '60000', 1, 'assets/img/courses_image/html.jpg'),
+(1, 'HTML Basic', 'Pelajari dasar-dasar HTML untuk membangun struktur halaman web. Mulai dari memahami elemen HTML, atribut, hingga membuat halaman yang terstruktur dan menarik.', '80000', 1, 'assets/img/courses_image/html.jpg'),
 (2, 'PHP Basic', 'Pelajari konsep dasar PHP untuk pengembangan web dinamis. Mulai dari sintaks dasar, manipulasi data, hingga koneksi database.', '70000', 1, 'assets/img/courses_image/php.jpg'),
 (3, 'Laravel', 'Jelajahi framework Laravel untuk membangun aplikasi web modern. Pelajari konsep MVC, routing, middleware, dan pengelolaan database menggunakan Eloquent ORM.', '100000', 1, 'assets/img/courses_image/laravel.jpeg'),
 (4, 'IoT', 'Masuki dunia IoT dan pelajari cara menghubungkan perangkat fisik ke internet. Materi mencakup dasar sensor, aktuator, hingga pengelolaan data menggunakan teknologi IoT.', '90000', 1, 'assets/img/courses_image/iot.jpg'),
-(9, 'js', 'ga tauu gabut', '90000', 0, 'assets/img/courses_image/intro-to-javascript-tutorial2.jpg');
+(9, 'javascript', 'ga tauu gabut', '90000', 0, 'assets/img/courses_image/intro-to-javascript-tutorial2.jpg');
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,6 @@ INSERT INTO `courses` (`id`, `title`, `description`, `price`, `created_by`, `ima
 CREATE TABLE `course_materials` (
   `id` int NOT NULL,
   `course_id` int NOT NULL,
-  `title` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL,
   `file_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -86,9 +85,10 @@ CREATE TABLE `course_materials` (
 -- Dumping data for table `course_materials`
 --
 
-INSERT INTO `course_materials` (`id`, `course_id`, `title`, `type`, `file_path`) VALUES
-(1, 1, 'Lecture 1: Basics', 'video', '/materials/basics.mp4'),
-(2, 2, 'Lecture 1: Advanced CSS', 'document', '/materials/advanced_css.pdf');
+INSERT INTO `course_materials` (`id`, `course_id`, `type`, `file_path`) VALUES
+(1, 1, 'docx', './assets/img/materi/Materi-Pembelajaran-html-dasar.docx'),
+(4, 2, 'docx', './assets/img/materi/Materi-Pembelajaran-php-dasar.docx'),
+(5, 3, 'pdf', './assets/img/materi/W10-Laravel1.pdf');
 
 -- --------------------------------------------------------
 
@@ -113,49 +113,26 @@ INSERT INTO `course_progress` (`id`, `user_id`, `course_id`, `percentage`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `student_pending`
+-- Table structure for table `payments`
 --
 
-CREATE TABLE `student_pending` (
-  `id` int NOT NULL,
-  `nama` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `no_hp` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `course` varchar(128) NOT NULL,
-  `price` decimal(20,0) NOT NULL,
-  `status` enum('Pelajar SMK/SMA','Mahasiswa','Bukan Pelajar') NOT NULL,
-  `resi_pembayaran` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `student_pending`
---
-
-INSERT INTO `student_pending` (`id`, `nama`, `email`, `no_hp`, `course`, `price`, `status`, `resi_pembayaran`) VALUES
-(1, 'syifa safira', 'syifa@gmail.com', '082273811061', 'HTML Basic', '50000', 'Mahasiswa', '01082005'),
-(2, 'rian', 'rian@gmail.com', '09726537', 'Laravel', '100000', 'Pelajar SMK/SMA', '1033873');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `transactions`
---
-
-CREATE TABLE `transactions` (
+CREATE TABLE `payments` (
   `id` int NOT NULL,
   `user_id` int NOT NULL,
   `course_id` int NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  `payment_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `amount` decimal(10,0) NOT NULL,
+  `status` enum('Pending','Verified','Rejected') DEFAULT 'Pending',
+  `proof` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `transactions`
+-- Dumping data for table `payments`
 --
 
-INSERT INTO `transactions` (`id`, `user_id`, `course_id`, `amount`, `status`, `payment_date`) VALUES
-(1, 2, 1, '100.00', 'Paid', '2024-12-26 05:53:10');
+INSERT INTO `payments` (`id`, `user_id`, `course_id`, `amount`, `status`, `proof`, `created_at`) VALUES
+(5, 14, 3, '100000', 'Verified', 'uploads/payments/Screenshot_2023-12-26_1354471.png', '2024-12-31 01:39:14'),
+(6, 15, 3, '100000', 'Rejected', 'uploads/payments/flame.png', '2024-12-31 02:59:58');
 
 -- --------------------------------------------------------
 
@@ -179,10 +156,37 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `image`, `password`, `role_id`, `is_active`, `date_created`) VALUES
-(1, 'Admin User', 'admin@example.com', 'default.jpg', 'hashed_admin_password', 1, 1, 1735192389),
+(1, 'Admin User', 'admin@example.com', 'default.jpg', '827ccb0eea8a706c4c34a16891f84e7b', 1, 1, 1735192389),
 (2, 'Student User', 'student@example.com', 'default.jpg', 'hashed_student_password', 2, 1, 1735192389),
 (3, 'Ilham', 'ilham@gmail.com', 'default.jpg', '$2y$10$DWCGosD7wre5PPmu5OEIx.UE7mHPUOG50PIp/ge9/eiDnDTzahFYm', 1, 1, 1735192640),
-(5, 'syifa', 'syifa@gmail.com', 'default.jpg', '$2y$10$foPJjsa2VDm9i2YVeEW6Z.8ir.POp19SZ4aTe1Nh4bzRIJRtDopGG', 2, 1, 1735446918);
+(5, 'syifa', 'syifa@gmail.com', 'default.jpg', '$2y$10$foPJjsa2VDm9i2YVeEW6Z.8ir.POp19SZ4aTe1Nh4bzRIJRtDopGG', 2, 1, 1735446918),
+(6, 'Intan Mastura', 'intmastura@gmail.com', 'default.jpg', '$2y$10$ZULPsALerjp.3IWM1N3nLOslG8PEtnZ4UqQpIkEtYSWV.NpgsDuI6', 2, 1, 1735526127);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(15) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `selected_course` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_active` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `selected_course`, `created_at`, `is_active`) VALUES
+(12, 'ilham', 'ilham@gmail.com', '086618653', '$2y$10$0UDGZtpOoqX5g9hskC/LWeDP2E7weqMtUM0R1KIfxCwlnNdZZtZh6', '4', '2024-12-31 01:04:35', 1),
+(14, 'syifa', 'syifa@gmail.com', '0810213761', '$2y$10$JKg/826Vp7lAPrP5BpELxOwzVIUIkL7VC3Ihz3nTBFlwSP7h3gnum', '3', '2024-12-31 01:38:49', 1),
+(15, 'rian', 'rian@gmail.com', '08765812', '$2y$10$GbZ.Qg6USRLgah8Fesj2BeJfYi4oVzrMGe6EpdCsM3dx2sdEs.iee', '3', '2024-12-31 02:59:28', 1);
 
 -- --------------------------------------------------------
 
@@ -280,15 +284,9 @@ ALTER TABLE `course_progress`
   ADD KEY `course_id` (`course_id`);
 
 --
--- Indexes for table `student_pending`
+-- Indexes for table `payments`
 --
-ALTER TABLE `student_pending`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `transactions`
---
-ALTER TABLE `transactions`
+ALTER TABLE `payments`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `course_id` (`course_id`);
@@ -297,6 +295,13 @@ ALTER TABLE `transactions`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
@@ -338,7 +343,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `course_materials`
 --
 ALTER TABLE `course_materials`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `course_progress`
@@ -347,22 +352,22 @@ ALTER TABLE `course_progress`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `student_pending`
+-- AUTO_INCREMENT for table `payments`
 --
-ALTER TABLE `student_pending`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `transactions`
---
-ALTER TABLE `transactions`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `payments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_access_menu`
