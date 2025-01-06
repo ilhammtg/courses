@@ -21,28 +21,36 @@ class User_model extends CI_Model
         return $this->db->get_where('users', ['email' => $email])->row_array();
     }
 
-    public function getAllUsers()
+    public function getAllUsers($search = null)
     {
         $this->db->select('users.*, courses.title as course_title');
         $this->db->from('users');
         $this->db->join('courses', 'users.selected_course = courses.id', 'left');
+
+        // Logic search
+        if (!empty($search)) {
+            $this->db->group_start();
+            $this->db->like('users.name', $search);
+            $this->db->or_like('users.email', $search);
+            $this->db->or_like('users.phone', $search);
+            $this->db->or_like('courses.title', $search);
+            $this->db->group_end();
+        }
+
         return $this->db->get()->result_array();
     }
 
-    // Get user by ID
     public function getUserById($id)
     {
         return $this->db->get_where('users', ['id' => $id])->row_array();
     }
 
-    // Update user
     public function updateUser($id, $data)
     {
         $this->db->where('id', $id);
         return $this->db->update('users', $data);
     }
 
-    // Delete user
     public function deleteUser($id)
     {
         $this->db->where('id', $id);

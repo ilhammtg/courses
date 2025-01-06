@@ -1,32 +1,3 @@
-<div class="container my-5 text-center min-vh-100 d-flex flex-column justify-content-center">
-    <h2 class="mb-4">Welcome to Our System</h2>
-    <p class="text-muted mb-5">Please select your login option below</p>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <a href="<?= base_url('auth'); ?>" class="card option-card text-decoration-none shadow-lg">
-                <div class="card-body">
-                    <div class="icon mb-3">
-                        <i class="bi bi-person-lock"></i>
-                    </div>
-                    <h4 class="card-title">Admin Login</h4>
-                    <p class="card-text">Access administrative features and manage the system.</p>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a href="<?= base_url('authuser/login'); ?>" class="card option-card text-decoration-none shadow-lg">
-                <div class="card-body">
-                    <div class="icon mb-3">
-                        <i class="bi bi-person"></i>
-                    </div>
-                    <h4 class="card-title">User Login</h4>
-                    <p class="card-text">Access your account and explore the courses that await you.</p>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-
 <style>
     /* General Styling */
     body {
@@ -78,3 +49,35 @@
         }
     }
 </style>
+
+<div class="container text-center min-vh-100 d-flex flex-column justify-content-center">
+    <h2 class="mb-4">Welcome to Our System</h2>
+    <p class="text-muted mb-5">Please select your login option below</p>
+    <div class="row justify-content-center">
+
+        <div class="col-md-4">
+            <a href="<?= base_url('authuser/login'); ?>" class="card option-card text-decoration-none shadow-lg">
+                <div class="card-body">
+                    <div class="icon mb-3">
+                        <i class="bi bi-person"></i>
+                    </div>
+                    <h4 class="card-title">User Login</h4>
+                    <p class="card-text">Access your account and explore the courses that await you.</p>
+                </div>
+            </a>
+        </div>
+
+
+        <div class="col-md-4">
+            <a href="<?= base_url('auth'); ?>" class="card option-card text-decoration-none shadow-lg">
+                <div class="card-body">
+                    <div class="icon mb-3">
+                        <i class="bi bi-person-lock"></i>
+                    </div>
+                    <h4 class="card-title">Admin Login</h4>
+                    <p class="card-text">Access administrative features and manage the system.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

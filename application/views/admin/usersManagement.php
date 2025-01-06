@@ -1,6 +1,14 @@
-<div class="container mt-4">
-    <h1 class="mb-4">Users Management</h1>
+<div class="container mt-2">
     <?= $this->session->flashdata('message'); ?>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Users Management</h1>
+        <form method="get" action="<?= base_url('admin/users'); ?>" class="d-flex">
+            <input type="text" name="search" class="form-control me-2" placeholder="Search users..." value="<?= $this->input->get('search'); ?>">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
 
     <table class="table table-striped">
         <thead>

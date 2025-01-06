@@ -8,7 +8,7 @@ class User extends CI_Controller
         parent::__construct();
         // Memastikan pengguna sudah login
         if (!$this->session->userdata('user_id')) {
-            redirect('authuser/login'); // Redirect ke halaman login jika tidak terautentikasi
+            redirect('authuser/login');
         }
     }
     public function index()

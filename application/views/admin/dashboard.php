@@ -78,7 +78,7 @@
                     </div>
                     <h5 class="card-title">Reports</h5>
                     <p class="card-text">View system reports and analytics.</p>
-                    <a href="<?= site_url('admin/payments') ?>" class="btn btn-primary">View Reports</a>
+                    <a href="<?= site_url('admin/report') ?>" class="btn btn-primary">View Reports</a>
                 </div>
             </div>
         </div>

@@ -180,7 +180,7 @@ class Admin extends CI_Controller
 
         $this->load->view('templates/admin_header', $data);
         $this->load->view('templates/admin_nav', $data);
-        $this->load->view('admin/payment', $data); // Halaman list payments
+        $this->load->view('admin/payment', $data);
         $this->load->view('templates/admin_footer', $data);
     }
 
@@ -193,7 +193,7 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('error', 'Failed to update payment status.');
         }
 
-        redirect('admin/payments'); // Pastikan URL ini memuat ulang tabel pembayaran
+        redirect('admin/payments');
     }
 
     public function courseMaterials()
@@ -297,7 +297,10 @@ class Admin extends CI_Controller
     public function users()
     {
         $data['title'] = 'Users Management';
-        $data['users'] = $this->User_model->getAllUsers();
+        $search = $this->input->get('search');
+        $this->load->model('User_model');
+
+        $data['users'] = $this->User_model->getAllUsers($search);
 
         $this->load->view('templates/admin_header', $data);
         $this->load->view('templates/admin_nav', $data);
@@ -356,5 +359,22 @@ class Admin extends CI_Controller
         $this->load->view('templates/admin_nav', $data);
         $this->load->view('admin/report', $data);
         $this->load->view('templates/admin_footer');
+    }
+
+    public function reportpdf()
+    {
+        $start_date = $this->input->get('start_date');
+        $end_date = $this->input->get('end_date');
+
+        // Ambil data dari model
+        $this->load->model('Report_model');
+        $reports = $this->Report_model->getReports($start_date, $end_date);
+
+        // Kirim data ke view
+        $data['reports'] = $reports;
+        $html = $this->load->view('admin/payment_report_pdf', $data, true);
+
+        // Generate PDF menggunakan helper
+        generate_pdf($html, 'Payment_Report_' . date('Ymd'));
     }
 }

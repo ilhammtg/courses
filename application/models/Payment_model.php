@@ -23,7 +23,7 @@ class Payment_model extends CI_Model
 
     public function getAllPayments()
     {
-        $this->db->select('payments.id, users.name as user_name, courses.title as course_name, payments.amount, payments.status');
+        $this->db->select('payments.id, users.name as user_name, courses.title as course_name, payments.amount, payments.proof, payments.status');
         $this->db->from('payments');
         $this->db->join('users', 'users.id = payments.user_id');
         $this->db->join('courses', 'courses.id = payments.course_id');

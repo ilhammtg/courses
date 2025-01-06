@@ -15,7 +15,6 @@ class AuthUser extends CI_Controller
         // Tangkap parameter 'course' dari URL jika ada
         $selected_course = $this->input->get('course');
 
-        // Ambil data kursus dari database atau model
         $courses = $this->Courses_model->getAllCourses();
 
         if ($this->input->post()) {
@@ -65,12 +64,11 @@ class AuthUser extends CI_Controller
                         'logged_in' => TRUE
                     ]);
 
-                    // Jika ada course yang dipilih, redirect ke halaman pembayaran
                     if ($selected_course) {
                         redirect('payment/form/' . $selected_course);
                     }
 
-                    redirect('user'); // Redirect ke halaman utama pengguna
+                    redirect('user');
                 } else {
                     $this->session->set_flashdata('error', 'Invalid email or password');
                 }
@@ -82,10 +80,9 @@ class AuthUser extends CI_Controller
 
     public function logout()
     {
-        // Hapus semua session data
         $this->session->unset_userdata(['user_id', 'user_name', 'logged_in']);
         $this->session->set_flashdata('success', 'You have been logged out.');
-        redirect('authuser/login'); // Redirect ke halaman login
+        redirect('authuser/login');
     }
 
     public function blocked()

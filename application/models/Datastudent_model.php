@@ -6,7 +6,7 @@ class Datastudent_model extends CI_Model
 
     public function getAllStudents()
     {
-        return $this->db->get('student_pending')->result_array(); // Ganti 'student_pending' dengan nama tabel di database Anda
+        return $this->db->get('student_pending')->result_array();
     }
 
     public function addStudent($data)

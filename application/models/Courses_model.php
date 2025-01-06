@@ -3,19 +3,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Courses_model extends CI_Model
 {
-    // Fungsi untuk mendapatkan semua data kursus
     public function getAllCourses()
     {
         return $this->db->get('courses')->result_array();
     }
 
-    // Fungsi untuk mendapatkan data kursus berdasarkan ID
     public function getCourseById($id)
     {
         return $this->db->get_where('courses', ['id' => $id])->row_array();
     }
 
-    // Fungsi untuk menambah data kursus baru
     public function addCourse()
     {
         if ($this->input->post()) {
@@ -43,7 +40,6 @@ class Courses_model extends CI_Model
         }
     }
 
-    // Fungsi untuk mengupdate data kursus
     public function updateCourse($id)
     {
         $data = [
@@ -69,7 +65,6 @@ class Courses_model extends CI_Model
         $this->db->update('courses', $data);
     }
 
-    // Fungsi untuk menghapus data kursus
     public function deletecourses($id)
     {
         $this->db->where('id', $id);

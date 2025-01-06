@@ -2,6 +2,7 @@
 :root {
     --navbar-height: 70px;
     --primary-color: #1b4f72; /* Primary Blue */
+    --transparanst-color: #1b4f7200;
     --secondary-color: #2874a6; /* Accent Blue */
     --text-color: #fff;
     --background-color: #d6eaf8; /* Light Blue Background */

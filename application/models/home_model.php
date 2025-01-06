@@ -15,7 +15,6 @@ class Home_model extends CI_Model
         $this->db->insert('student_pending', $data);
     }
 
-    // Function to fetch data of a specific student
     function get_one($id)
     {
         $indeks = array('id_student' => $id);

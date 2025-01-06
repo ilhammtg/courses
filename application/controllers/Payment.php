@@ -10,17 +10,14 @@ class Payment extends CI_Controller
         if (!$this->session->userdata('user_id')) {
             redirect('authuser/login');
         }
-        // Memuat model yang diperlukan
         $this->load->model('Courses_model');
         $this->load->model('Payment_model');
     }
 
-    // Menampilkan form pembayaran
     public function form($course_id)
     {
         $data['title'] = 'Payment';
 
-        // Ambil data kursus berdasarkan ID
         $course = $this->Courses_model->getCourseById($course_id);
 
         // Jika kursus tidak ditemukan, tampilkan error 404
@@ -91,7 +88,7 @@ class Payment extends CI_Controller
             'user_id' => $this->session->userdata('user_id'),
             'course_id' => $course_id,
             'amount' => $course['price'], // Ambil harga kursus
-            'proof' => 'uploads/payments/' . $file_data['file_name'],
+            'proof' => './assets/img/payments_proof/' . $file_data['file_name'],
             'status' => 'Pending', // Status pembayaran awal adalah Pending
         ];
 
