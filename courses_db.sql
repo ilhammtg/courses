@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 31, 2024 at 08:19 PM
+-- Generation Time: Jan 06, 2025 at 07:28 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -131,8 +131,9 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `user_id`, `course_id`, `amount`, `status`, `proof`, `created_at`) VALUES
-(5, 14, 3, '100000', 'Verified', 'uploads/payments/Screenshot_2023-12-26_1354471.png', '2024-12-31 01:39:14'),
-(6, 15, 3, '100000', 'Rejected', 'uploads/payments/flame.png', '2024-12-31 02:59:58');
+(5, 14, 3, '100000', 'Verified', 'assets/img/payments_proof/Screenshot_2023-12-26_1354471.png', '2024-12-31 01:39:14'),
+(6, 15, 3, '100000', 'Rejected', 'assets/img/payments_proof/flame.png', '2024-12-31 02:59:58'),
+(7, 16, 1, '80000', 'Verified', './assets/img/payments_proof/Screenshot_2024-07-07_203737.png', '2025-01-06 18:36:30');
 
 -- --------------------------------------------------------
 
@@ -184,9 +185,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `selected_course`, `created_at`, `is_active`) VALUES
-(12, 'ilham', 'ilham@gmail.com', '086618653', '$2y$10$0UDGZtpOoqX5g9hskC/LWeDP2E7weqMtUM0R1KIfxCwlnNdZZtZh6', '4', '2024-12-31 01:04:35', 1),
 (14, 'syifa', 'syifa@gmail.com', '0810213761', '$2y$10$JKg/826Vp7lAPrP5BpELxOwzVIUIkL7VC3Ihz3nTBFlwSP7h3gnum', '3', '2024-12-31 01:38:49', 1),
-(15, 'rian', 'rian@gmail.com', '08765812', '$2y$10$GbZ.Qg6USRLgah8Fesj2BeJfYi4oVzrMGe6EpdCsM3dx2sdEs.iee', '3', '2024-12-31 02:59:28', 1);
+(15, 'rian', 'rian@gmail.com', '08765812', '$2y$10$GbZ.Qg6USRLgah8Fesj2BeJfYi4oVzrMGe6EpdCsM3dx2sdEs.iee', '3', '2024-12-31 02:59:28', 1),
+(16, 'riki', 'riki@gmail.com', '08243094820', '$2y$10$sta.mnwdOwoSWa6La.o/R.J37vZRQhmO.kJqZ5GZpZoVnRmB/Zyay', '1', '2025-01-06 18:35:34', 1);
 
 -- --------------------------------------------------------
 
@@ -355,7 +356,7 @@ ALTER TABLE `course_progress`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -367,7 +368,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `user_access_menu`
